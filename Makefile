@@ -22,6 +22,6 @@ builds/container-linux-$(CONTAINER_LINUX_RELEASE).qcow2:
 		container-linux.json
 
 clean:
-	rm -rf builds httpdir/ssh-install.pub
+	rm -rf builds packer_cache
 
 .PHONY: clean
