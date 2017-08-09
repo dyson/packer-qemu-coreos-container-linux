@@ -20,7 +20,6 @@
             "disk_size": "{{ user `disk_size` }}",
             "format": "qcow2",
             "accelerator": "kvm",
-            "http_directory": "httpdir",
             "vm_name": "container-linux-{{user `coreos_release` }}.qcow2",
             "boot_wait": "{{user `boot_wait` }}",
             "ssh_username": "core",
