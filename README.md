@@ -12,7 +12,7 @@ $ cp container-linux-config.yml.example container-linux-config.yml
 
 ## Installing ct
 
-CoreOS Container Linux is moving away from the cloud-config file format and over to the [container linux config](https://coreos.com/os/docs/latest/configuration.html) and [ignition](https://coreos.com/ignition/docs/latest/what-is-ignition.html) formats. Ignition files use JSON and are transcompiled from a container linux config YAML file. The [ct](https://github.com/coreos/container-linux-config-transpiler/) tool is used to do this and the Makefile includes some convenient targets to install, update, and delete this tool for linux hosts. Requires root to install the binary into /usr/local/bin. If you already have ct installed you can skip these steps.
+CoreOS Container Linux is moving away from the cloud-config file format and over to the [container linux config](https://coreos.com/os/docs/latest/configuration.html) and [ignition](https://coreos.com/ignition/docs/latest/what-is-ignition.html) formats. Ignition files use JSON and are transpiled from a container linux config YAML file. The [ct](https://github.com/coreos/container-linux-config-transpiler/) tool is used to do this and the Makefile includes some convenient targets to install, update, and delete this tool for linux hosts. Requires root to install the binary into /usr/local/bin. If you already have ct installed you can skip these steps.
 
 Install:
 ```
@@ -63,7 +63,7 @@ $ make cache-clean
 ```
 
 ## Without Makefile
-Without buidling from the Makefile you will neet to obtain the iso checksum manually (or not varify it) and also transcompile the container linux config into the ignition format before building.
+Without buidling from the Makefile you will neet to obtain the iso checksum manually (or not varify it) and also transpile the container linux config into the ignition format before building.
 
 ### Packer variables
 ```make
