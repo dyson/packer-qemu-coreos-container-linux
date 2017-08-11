@@ -12,7 +12,7 @@ $ cp container-linux-config.yml.example container-linux-config.yml
 
 ## Installing ct
 
-CoreOS Container Linux is moving away from the cloud-config file format and over to the container linux config and ignition formats. Ignition files use json and are transcompiled from a container linux config yaml file. The `ct` tool is used to do this and the Makefile includes some onvenient targets to install, update and delete this tool for linux hosts. Requires root to install the binary into /usr/local/bin. If you already have ct installed you can skip these steps.
+CoreOS Container Linux is moving away from the cloud-config file format and over to the [container linux config](https://coreos.com/os/docs/latest/configuration.html) and [ignition](https://coreos.com/ignition/docs/latest/what-is-ignition.html) formats. Ignition files use JSON and are transcompiled from a container linux config YAML file. The [ct](https://github.com/coreos/container-linux-config-transpiler/) tool is used to do this and the Makefile includes some convenient targets to install, update, and delete this tool for linux hosts. Requires root to install the binary into /usr/local/bin. If you already have ct installed you can skip these steps.
 
 Install:
 ```
@@ -27,6 +27,39 @@ $ make ct-update
 Delete:
 ```
 $ make ct-clean
+```
+
+# Usage
+Populate your [container linux config](https://coreos.com/os/docs/latest/configuration.html) YAML file with all configuration you want apply in the installed image.
+
+## With Makefile
+
+### Makefile variables
+```make
+PACKER_CMD ?= packer
+RELEASE ?= alpha
+DIGEST_URL ?= https://$(RELEASE).release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso.DIGESTS
+CONFIG ?= container-linux-config.yml
+DISK_SIZE ?= 40000
+MEMORY ?= 1024M
+BOOT_WAIT ?= 45s
+```
+### Basic example using defaults
+```
+$ make container-linux
+```
+### Building the alpha release
+```
+$ make container-linux RELEASE=alpha
+```
+### Other make targets
+Delete builds:
+```
+$ make clean
+```
+Delete the packer cache (making packer download the latest iso image on next build):
+```
+$ make cache-clean
 ```
 
 # License
