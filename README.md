@@ -62,5 +62,26 @@ Delete the packer cache (making packer download the latest iso image on next bui
 $ make cache-clean
 ```
 
+## Without Makefile
+Without buidling from the Makefile you will neet to obtain the iso checksum manually (or not varify it) and also transcompile the container linux config into the ignition format before building.
+
+### Packer variables
+```make
+"release": "stable",
+"iso_checksum": "",
+"iso_checksum_type": "none",
+"disk_size": "40000",
+"memory": "1024M",
+"boot_wait": "45s",
+"ignition": "ignition.json"
+```
+### Basic example using defaults
+```
+$ packer build -force container-linux.json
+```
+### Building the alpha release
+```
+$ packer build -force -var 'release=alpha' container-linux.json
+```
 # License
 See LICENSE file.
