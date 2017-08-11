@@ -1,3 +1,4 @@
 builds/
 packer_cache/
 container-linux-config.yml
+ignition.json

@@ -6,7 +6,7 @@
         "disk_size": "40000",
         "memory": "1024M",
         "boot_wait": "45s",
-        "config": "container-linux-config.yml"
+        "ignition": "ignition.json"
     },
 
     "builders": [
@@ -39,13 +39,13 @@
     "provisioners": [
         {
             "type": "file",
-            "source": "{{ user `config` }}",
-            "destination": "/tmp/container-linux-config.yml"
+            "source": "{{ user `ignition` }}",
+            "destination": "/tmp/ignition.json"
         },
         {
             "type": "shell",
             "inline": [
-                "sudo coreos-install -d /dev/vda -C {{ user `release` }} -c /tmp/container-linux-config.yml"
+                "sudo coreos-install -d /dev/vda -C {{ user `release` }} -i /tmp/ignition.json"
             ]
         }
     ]

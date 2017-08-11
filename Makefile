@@ -1,27 +1,42 @@
 PACKER_CMD ?= packer
-CONTAINER_LINUX_RELEASE ?= stable
-CONTAINER_LINUX_IMAGE_DIGEST_URL ?= https://$(CONTAINER_LINUX_RELEASE).release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso.DIGESTS
-CONTAINER_LINUX_CONFIG ?= container-linux-config.yml
+RELEASE ?= alpha
+DIGEST_URL ?= https://$(RELEASE).release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso.DIGESTS
+CONFIG ?= container-linux-config.yml
 DISK_SIZE ?= 40000
 MEMORY ?= 1024M
 BOOT_WAIT ?= 45s
 
-container-linux: builds/container-linux-$(CONTAINER_LINUX_RELEASE).qcow2
+container-linux: builds/container-linux-$(RELEASE).qcow2
 
-builds/container-linux-$(CONTAINER_LINUX_RELEASE).qcow2:
-	$(eval CONTAINER_LINUX_IMAGE_ISO_CHECKSUM := $(shell curl -s "$(CONTAINER_LINUX_IMAGE_DIGEST_URL)" | grep "coreos_production_iso_image.iso" | awk '{ print length, $$1 | "sort -rg"}' | awk 'NR == 1 { print $$2 }'))
+builds/container-linux-$(RELEASE).qcow2:
+	$(eval ISO_CHECKSUM := $(shell curl -s "$(DIGEST_URL)" | grep "coreos_production_iso_image.iso" | awk '{ print length, $$1 | "sort -rg"}' | awk 'NR == 1 { print $$2 }'))
+	
+	ct -pretty -in-file $(CONFIG) -out-file ignition.json
 
 	$(PACKER_CMD) build -force \
-		-var 'release=$(CONTAINER_LINUX_RELEASE)' \
-		-var 'iso_checksum=$(CONTAINER_LINUX_IMAGE_ISO_CHECKSUM)' \
+		-var 'release=$(RELEASE)' \
+		-var 'iso_checksum=$(ISO_CHECKSUM)' \
 		-var 'iso_checksum_type=sha512' \
 		-var 'disk_size=$(DISK_SIZE)' \
 		-var 'memory=$(MEMORY)' \
 		-var 'boot_wait=$(BOOT_WAIT)' \
-		-var 'config=$(CONTAINER_LINUX_CONFIG)' \
 		container-linux.json
 
 clean:
-	rm -rf builds packer_cache
+	rm -rf builds
 
-.PHONY: clean
+cache-clean:
+	rm -rf packer_cache
+
+ct: /usr/local/bin/ct
+
+/usr/local/bin/ct:
+	wget -O /usr/local/bin/ct https://github.com/coreos/container-linux-config-transpiler/releases/download/v0.4.2/ct-v0.4.2-x86_64-unknown-linux-gnu
+	chmod +x /usr/local/bin/ct
+
+ct-update: ct-clean ct
+
+ct-clean:
+	rm /usr/local/bin/ct
+
+.PHONY: clean cache-clean ct-update ct-clean
