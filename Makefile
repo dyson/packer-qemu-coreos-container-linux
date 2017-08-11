@@ -31,7 +31,7 @@ cache-clean:
 ct: /usr/local/bin/ct
 
 /usr/local/bin/ct:
-	wget -O /usr/local/bin/ct https://github.com/coreos/container-linux-config-transpiler/releases/download/v0.4.2/ct-v0.4.2-x86_64-unknown-linux-gnu
+	wget -O /usr/local/bin/ct https://github.com$(shell curl -s -L https://github.com/coreos/container-linux-config-transpiler/releases/latest | grep -m 1 -o "/coreos/container-linux-config-transpiler/releases/download/.*unknown-linux-gnu")
 	chmod +x /usr/local/bin/ct
 
 ct-update: ct-clean ct
