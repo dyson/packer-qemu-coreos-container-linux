@@ -41,7 +41,7 @@ RELEASE ?= alpha
 DIGEST_URL ?= https://$(RELEASE).release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso.DIGESTS
 CONFIG ?= container-linux-config.yml
 DISK_SIZE ?= 40000
-MEMORY ?= 1024M
+MEMORY ?= 2048M
 BOOT_WAIT ?= 45s
 ```
 ### Basic example using defaults
@@ -71,7 +71,7 @@ Without buidling from the Makefile you will neet to obtain the iso checksum manu
 "iso_checksum": "",
 "iso_checksum_type": "none",
 "disk_size": "40000",
-"memory": "1024M",
+"memory": "2048M",
 "boot_wait": "45s",
 "ignition": "ignition.json"
 ```

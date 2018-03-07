@@ -4,7 +4,7 @@
         "iso_checksum": "",
         "iso_checksum_type": "none",
         "disk_size": "40000",
-        "memory": "1024M",
+        "memory": "2048M",
         "boot_wait": "45s",
         "ignition": "ignition.json"
     },

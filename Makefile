@@ -3,7 +3,7 @@ RELEASE ?= stable
 DIGEST_URL ?= https://$(RELEASE).release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso.DIGESTS
 CONFIG ?= container-linux-config.yml
 DISK_SIZE ?= 40000
-MEMORY ?= 1024M
+MEMORY ?= 2048M
 BOOT_WAIT ?= 45s
 
 container-linux: builds/container-linux-$(RELEASE).qcow2
